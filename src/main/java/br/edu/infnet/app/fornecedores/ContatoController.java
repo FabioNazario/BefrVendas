@@ -15,16 +15,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class ContatoController {
 
     @Autowired
-    private ContatoRepository cr;
+    private ContatoRepository contatoRepository;
     
     @Autowired
-    private FornecedorRepository fr;
+    private FornecedorRepository fornecedorRepository;
 
     @RequestMapping("/contatos/listar")
     public ModelAndView listarContatos() {
 
         ModelAndView retorno = new ModelAndView("contatos/index");
-        List<Contato> contatos = cr.listar();
+        List<Contato> contatos = contatoRepository.listar();
         if (contatos != null && !contatos.isEmpty()) {
 
             retorno.addObject("contatos", contatos);
@@ -33,7 +33,7 @@ public class ContatoController {
             retorno.addObject("mensagem", "Não há registros para exibir");
         }
         //----------------------------------------------------------------------
-        List<Fornecedor> fornecedores = fr.listar();
+        List<Fornecedor> fornecedores = fornecedorRepository.listar();
         if(fornecedores != null && !fornecedores.isEmpty()) {
             
             retorno.addObject("fornecedores", fornecedores);
@@ -41,26 +41,51 @@ public class ContatoController {
         return retorno;
     }
     
+    @RequestMapping("/contatos/editar")
+    public ModelAndView editarContato(int id) {
+
+        ModelAndView retorno = new ModelAndView("contatos/index");
+        Contato contato = contatoRepository.obter(id);
+        retorno.addObject("contato", contato);
+        
+        Fornecedor fornecedor = contato.getFornecedor();
+        retorno.addObject("fornecedor", fornecedor);
+        
+        return retorno;
+    }
+    
     @RequestMapping("/contatos/salvar")
     public ModelAndView salvarContato(Contato contato, Integer fornId) {
 
         ModelAndView retorno = new ModelAndView("contatos/index");
-        if(contato.getId() == null) {
-
-            //------------------------------------------------------------------
-            //O certo é obterComContatos - use o FETCH
-            Fornecedor forn = fr.obter(fornId);            
-            ArrayList<Contato> contatos = new ArrayList<>();
-            //------------------------------------------------------------------
-            contatos.add(contato);
-            forn.setContatos(contatos);
+       
+            Fornecedor forn = fornecedorRepository.obter(fornId);            
             contato.setFornecedor(forn);
-            cr.inserir(contato);
+        
+        if(contato.getId() == null) {
+            contatoRepository.inserir(contato);
         } else {
-            
+            contatoRepository.atualizar(contato);
         }
         retorno.addObject("contato", null);
-        retorno.addObject("contatos", cr.listar());
+        retorno.addObject("contatos", contatoRepository.listar());
+        
+        List<Fornecedor> fornecedores = fornecedorRepository.listar();
+        if(fornecedores != null && !fornecedores.isEmpty()) {
+            
+            retorno.addObject("fornecedores", fornecedores);
+        }
+        
         return retorno;
     }
+    
+    @RequestMapping("/contatos/excluir")
+    public ModelAndView excluirContato(int id) {
+        
+        Contato contato = contatoRepository.obter(id);
+        contatoRepository.excluir(contato);
+ 
+        return new ModelAndView("contatos/index"); 
+    }
+
 }

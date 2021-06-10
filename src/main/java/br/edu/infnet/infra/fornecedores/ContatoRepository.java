@@ -21,10 +21,28 @@ public class ContatoRepository {
                 .createNamedQuery("Contato.findAll")
                 .getResultList();
     }
+   
+     public Contato obter(int id) {
+        
+        return (Contato) em
+                .createNamedQuery("Contato.findById")
+                .setParameter("id", id)
+                .getSingleResult();
+    }
     
     @Transactional
     public void inserir(Contato contato) {
         
         em.persist(contato);
+    }
+     
+    @Transactional
+    public void atualizar(Contato contato) {
+        em.merge(contato);   
+    }
+    
+    @Transactional
+    public void excluir(Contato contato) {
+        em.remove(em.getReference(Contato.class, contato.getId()));  
     }
 }

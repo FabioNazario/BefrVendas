@@ -39,8 +39,8 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.jsp">Fornecedores</a></li>
                     <li><a href="../contatos/index.jsp">Contatos</a></li>
-                    <li><a href="#">Produtos</a></li>
-                    <li><a href="#">Cotações</a></li>
+                    <li><a href="../produtos/index.jsp">Produtos</a></li>
+                    <li><a href="../cotacoes/index.jsp">Cotações</a></li>
                 </ul>
             </div>            
         </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Salvar</button>
+                    <button type="submit" class="btn btn-default">${fornecedor.id != null?'Atualizar':'Salvar'}</button>
                 </div>
             </div>
         </form>

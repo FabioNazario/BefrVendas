@@ -38,8 +38,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="../fornecedores/index.jsp">Fornecedores</a></li>
                     <li class="active"><a href="index.jsp">Contatos</a></li>
-                    <li><a href="#">Produtos</a></li>
-                    <li><a href="#">Cotações</a></li>
+                    <li><a href="../produtos/index.jsp">Produtos</a></li>
+                    <li><a href="../cotacoes/index.jsp">Cotações</a></li>
                 </ul>
             </div>            
         </div>
@@ -53,7 +53,7 @@
                     <select name="fornId">
                         <option value="0">Selecione...</option>
                         <c:forEach var="forn" items="${fornecedores}">
-                            <option value="${forn.id}">${forn.nomeFantasia}</option>
+                            <option ${forn.id == fornecedor.id ?"selected":""} value="${forn.id}">${forn.nomeFantasia}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -81,7 +81,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Salvar</button>
+                    <button type="submit" class="btn btn-default">${contato.id != null?'Atualizar':'Salvar'}</button>
                 </div>
             </div>
         </form>

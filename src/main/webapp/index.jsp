@@ -19,14 +19,14 @@
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="../index.jsp">BEFR Vendas</a>
+                <a class="navbar-brand" href="index.jsp">BEFR Vendas</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="fornecedores/index.jsp">Fornecedores</a></li>
                     <li><a href="contatos/index.jsp">Contatos</a></li>
-                    <li><a href="#">Produtos</a></li>
-                    <li><a href="#">Cotações</a></li>
+                    <li><a href="produtos/index.jsp">Produtos</a></li>
+                    <li><a href="cotacoes/index.jsp">Cotações</a></li>
                     <img src="imagens/edit.png" alt=""/>
                 </ul>
             </div>            

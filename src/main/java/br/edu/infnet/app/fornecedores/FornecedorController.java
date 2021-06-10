@@ -12,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class FornecedorController {
 
     @Autowired
-    private FornecedorRepository fr;
+    private FornecedorRepository fornecedorRepository;
 
     @RequestMapping("/fornecedores/listar")
     public ModelAndView listarFornecedores() {
 
         ModelAndView retorno = new ModelAndView("fornecedores/index");
-        List<Fornecedor> lista = fr.listar();
+        List<Fornecedor> lista = fornecedorRepository.listar();
         if (lista != null && !lista.isEmpty()) {
 
             retorno.addObject("fornecedores", lista);
@@ -33,24 +33,22 @@ public class FornecedorController {
     public ModelAndView editarFornecedor(int id) {
 
         ModelAndView retorno = new ModelAndView("fornecedores/index");
-        Fornecedor forn = fr.obter(id);
+        Fornecedor forn = fornecedorRepository.obter(id);
         retorno.addObject("fornecedor", forn);
         return retorno;
     }
 
     @RequestMapping("/fornecedores/salvar")
     public ModelAndView salvarFornecedor(Fornecedor fornecedor) {
-        
-        System.out.println("##############" + fornecedor);
 
         ModelAndView retorno = new ModelAndView("fornecedores/index");
         if (fornecedor.getId() == null) {
-            fr.inserir(fornecedor);
+            fornecedorRepository.inserir(fornecedor);
         } else {
-            fr.atualizar(fornecedor);
+            fornecedorRepository.atualizar(fornecedor);
         }
         retorno.addObject("fornecedor", null);
-        retorno.addObject("fornecedores", fr.listar());
+        retorno.addObject("fornecedores", fornecedorRepository.listar());
         return retorno;
     }
 }
