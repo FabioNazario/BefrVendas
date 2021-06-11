@@ -103,6 +103,8 @@ public class CotacaoController {
             retorno.addObject("produtos", produtos);
         }
         
+        retorno.addObject("msgSucesso", "Cotação incluída com sucesso.");
+        
         return retorno;
  
     }

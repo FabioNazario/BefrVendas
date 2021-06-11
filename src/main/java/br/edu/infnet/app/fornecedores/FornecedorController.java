@@ -49,6 +49,9 @@ public class FornecedorController {
         }
         retorno.addObject("fornecedor", null);
         retorno.addObject("fornecedores", fornecedorRepository.listar());
+        
+        retorno.addObject("msgSucesso", "Fornecedor incluído com sucesso.");
+        
         return retorno;
     }
     

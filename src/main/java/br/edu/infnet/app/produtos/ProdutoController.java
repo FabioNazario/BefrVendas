@@ -49,6 +49,9 @@ public class ProdutoController {
         }
         retorno.addObject("produto", null);
         retorno.addObject("produtos", produtoRepository.listar());
+        
+        retorno.addObject("msgSucesso", "Fornecedor incluído com sucesso.");
+        
         return retorno;
     }
     
