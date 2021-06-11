@@ -39,4 +39,9 @@ public class FornecedorRepository {
     public void atualizar(Fornecedor fornecedor) {
         em.merge(fornecedor);   
     }
+    
+    @Transactional
+    public void excluir(Fornecedor fornecedor) {
+        em.remove(em.getReference(Fornecedor.class, fornecedor.getId()));  
+    }
 }

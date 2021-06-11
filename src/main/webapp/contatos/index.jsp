@@ -1,32 +1,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib tagdir="/WEB-INF/tags/" prefix="tags" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<c:if test="${empty contatos && empty mensagem}">
-    <jsp:forward page="listar" />
-</c:if>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>BEFR Vendas</title>
-        <!-- --------------------------------------------------------------- -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap.min.js"></script>
-        <!-- --------------------------------------------------------------- -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap.min.css"/>
-        <!-- --------------------------------------------------------------- -->
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#contatos').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json"
-                    }
-                });
-            });
-        </script>
+        <tags:head/>
     </head>
     <body>
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -45,6 +25,10 @@
         </div>
     </nav>
     <div class="container">
+        <c:if test="${empty contatos && empty msgAlerta && empty msgErro && empty msgSucesso}">
+            <jsp:forward page="listar" />
+        </c:if>
+        <tags:mensagens/>
         <form class="form-horizontal" action="salvar" method="post">
             <input type="hidden" name="id" value="${contato.id}" />
             <div class="form-group">
@@ -88,7 +72,7 @@
         <c:choose>
             <c:when test="${not empty contatos}">
                 <div style="width: 600px">
-                    <table class="table" id="contatos">
+                    <table class="table" id="data-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -108,16 +92,13 @@
                                     <td>${contato.email}</td>
                                     <td>${contato.fone}</td>
                                     <td>${contato.fornecedor.nomeFantasia}</td>
-                                    <td><a href="editar?id=${contato.id}"><img src="../imagens/edit.png" /></a></td>
-                                    <td><a href="excluir?id=${contato.id}"><img src="../imagens/edit_remove.png" /></a></td>
+                                    <td><a href="editar?id=${contato.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                    <td><a href="excluir?id=${contato.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
-            </c:when>
-            <c:when test="${not empty mensagem}">
-                <h3 style="color: blue">${mensagem}</h3>
             </c:when>
         </c:choose>
     </div>

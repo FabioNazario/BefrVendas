@@ -1,7 +1,6 @@
 package br.edu.infnet.domain.fornecedores;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

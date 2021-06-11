@@ -30,7 +30,7 @@ public class ContatoController {
             retorno.addObject("contatos", contatos);
         } else {
             
-            retorno.addObject("mensagem", "Não há registros para exibir");
+            retorno.addObject("msgAlerta", "Não há registros para exibir");
         }
         //----------------------------------------------------------------------
         List<Fornecedor> fornecedores = fornecedorRepository.listar();
@@ -75,6 +75,8 @@ public class ContatoController {
             
             retorno.addObject("fornecedores", fornecedores);
         }
+        
+        retorno.addObject("msgSucesso", "Contato incluído com sucesso.");
         
         return retorno;
     }

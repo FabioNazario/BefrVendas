@@ -24,7 +24,7 @@ public class FornecedorController {
             retorno.addObject("fornecedores", lista);
         } else {
 
-            retorno.addObject("mensagem", "Não existem registros para exibir");
+            retorno.addObject("msgAlerta", "Não existem registros para exibir");
         }
         return retorno;
     }
@@ -50,5 +50,14 @@ public class FornecedorController {
         retorno.addObject("fornecedor", null);
         retorno.addObject("fornecedores", fornecedorRepository.listar());
         return retorno;
+    }
+    
+    @RequestMapping("/fornecedores/excluir")
+    public ModelAndView excluirFornecedor(int id) {
+        
+        Fornecedor fornecedor = fornecedorRepository.obter(id);
+        fornecedorRepository.excluir(fornecedor);
+ 
+        return new ModelAndView("fornecedores/index"); 
     }
 }
