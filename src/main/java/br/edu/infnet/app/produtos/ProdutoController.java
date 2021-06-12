@@ -3,6 +3,7 @@ package br.edu.infnet.app.produtos;
 import br.edu.infnet.domain.produtos.Produto;
 import br.edu.infnet.infra.produtos.ProdutoRepository;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProdutoController {
 
+    ResourceBundle labels = ResourceBundle.getBundle("br.edu.infnet.bundle");
+    
     @Autowired
     private ProdutoRepository produtoRepository;
 
@@ -24,7 +27,7 @@ public class ProdutoController {
             retorno.addObject("produtos", lista);
         } else {
 
-            retorno.addObject("msgAlerta", "Não existem registros para exibir");
+            retorno.addObject("msgAlerta", labels.getString("msg.alerta.semRegistros"));
         }
         return retorno;
     }

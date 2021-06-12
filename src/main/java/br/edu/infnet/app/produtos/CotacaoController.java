@@ -9,6 +9,10 @@ import br.edu.infnet.infra.fornecedores.FornecedorRepository;
 import br.edu.infnet.infra.produtos.ProdutoRepository;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CotacaoController {
 
+    ResourceBundle labels = ResourceBundle.getBundle("br.edu.infnet.bundle");
+    
     @Autowired
     private CotacaoRepository cotacaoRepository;
     
@@ -36,9 +42,9 @@ public class CotacaoController {
             retorno.addObject("cotacoes", cotacoes);
         } else {
             
-            retorno.addObject("msgAlerta", "Não há registros para exibir");
+            retorno.addObject("msgAlerta", labels.getString("msg.alerta.semRegistros"));
         }
-        //----------------------------------------------------------------------
+        
         List<Fornecedor> fornecedores = fornecedorRepository.listar();
         if(fornecedores != null && !fornecedores.isEmpty()) {
             
@@ -57,14 +63,22 @@ public class CotacaoController {
     public ModelAndView editarCotacao(int id) {
 
         ModelAndView retorno = new ModelAndView("cotacoes/index");
-        Cotacao cotacao = cotacaoRepository.obter(id);
-        retorno.addObject("cotacao", cotacao);
         
-        Fornecedor fornecedor = cotacao.getFornecedor();
-        retorno.addObject("fornecedor", fornecedor);
+        try {
+            Cotacao cotacao = cotacaoRepository.obter(id);
+            retorno.addObject("cotacao", cotacao);
+
+            Fornecedor fornecedor = cotacao.getFornecedor();
+            retorno.addObject("fornecedor", fornecedor);
+
+            Produto produto = cotacao.getProduto();
+            retorno.addObject("produto", produto);  
+        } catch (Exception e) {
+            
+            retorno.addObject("msgErro", labels.getString("msg.erro.inesperado"));
+            e.printStackTrace();
+        }
         
-        Produto produto = cotacao.getProduto();
-        retorno.addObject("produto", produto);
         
         return retorno;
     }
@@ -72,39 +86,42 @@ public class CotacaoController {
     @RequestMapping("/cotacoes/salvar")
     public ModelAndView salvarCotacao(Cotacao cotacao, Integer fornId, Integer prodId) {
 
-        
+        ModelAndView retorno = new ModelAndView("cotacoes/index"); 
         cotacao.setData(new Date());
+
+        try {
+            Fornecedor forn = fornecedorRepository.obter(fornId);
+            cotacao.setFornecedor(forn);
+        } catch (Exception e) {
+            retorno.addObject("msgErro", labels.getString("msg.erro.fornecedorInvalido"));
+            return retorno;
+        }   
         
-        ModelAndView retorno = new ModelAndView("cotacoes/index");
-       
-        Fornecedor forn = fornecedorRepository.obter(fornId);            
-        cotacao.setFornecedor(forn);
+        try {
+            Produto prod = produtoRepository.obter(prodId);            
+            cotacao.setProduto(prod);
+        } catch (Exception e) {
+            retorno.addObject("msgErro", labels.getString("msg.erro.protutoInvalido"));
+            return retorno;
+        }  
         
-        Produto prod = produtoRepository.obter(prodId);            
-        cotacao.setProduto(prod);
+        listarCotacoes();
         
-        if(cotacao.getId() == null) {
-            cotacaoRepository.inserir(cotacao);
-        } else {
-            cotacaoRepository.atualizar(cotacao);
+        try {
+            if(cotacao.getId() == null) {
+                cotacaoRepository.inserir(cotacao);
+                retorno.addObject("msgSucesso", labels.getString("msg.sucesso.inclusaoRegistro"));
+            } else {
+                cotacaoRepository.atualizar(cotacao);
+                retorno.addObject("msgSucesso", labels.getString("msg.sucesso.atualizacaoRegistro"));
+            } 
+        } catch (PersistenceException e) {
+            retorno.addObject("msgErro", labels.getString("msg.erro.campoNulo"));
         }
+            
+        
         retorno.addObject("cotacao", null);
-        retorno.addObject("cotacoes", cotacaoRepository.listar());
-        
-        List<Fornecedor> fornecedores = fornecedorRepository.listar();
-        if(fornecedores != null && !fornecedores.isEmpty()) {
-            
-            retorno.addObject("fornecedores", fornecedores);
-        }
-        
-        List<Produto> produtos = produtoRepository.listar();
-        if(produtos != null && !produtos.isEmpty()) {
-            
-            retorno.addObject("produtos", produtos);
-        }
-        
-        retorno.addObject("msgSucesso", "Cotação incluída com sucesso.");
-        
+  
         return retorno;
  
     }
@@ -112,10 +129,22 @@ public class CotacaoController {
     @RequestMapping("/cotacoes/excluir")
     public ModelAndView excluirCotacao(int id) {
         
-        Cotacao cotacao = cotacaoRepository.obter(id);
-        cotacaoRepository.excluir(cotacao);
- 
-        return new ModelAndView("cotacoes/index"); 
+        ModelAndView retorno = new ModelAndView("cotacoes/index"); 
+        try{
+            Cotacao cotacao = cotacaoRepository.obter(id);
+            cotacaoRepository.excluir(cotacao);
+            retorno.addObject("msgSucesso", labels.getString("msg.sucesso.registroExcluido"));
+        }catch (NoResultException e){
+            
+            retorno.addObject("msgErro", labels.getString("msg.erro.exlcuidoNaoEncontrado"));
+            e.printStackTrace();
+        } catch (Exception e) {
+            
+            retorno.addObject("msgErro", labels.getString("msg.erro.inesperado"));
+            e.printStackTrace();
+        }
+        
+        return retorno; 
     }
 
 }

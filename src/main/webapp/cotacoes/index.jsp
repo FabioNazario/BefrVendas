@@ -11,7 +11,7 @@
     <body>
         <tags:navibar pagina="cotacoes"/>
         <div class="container">
-            <c:if test="${empty cotacoes && empty msgAlerta && empty msgErro && empty msgSucesso}">
+            <c:if test="${empty cotacoes && empty msgAlerta}">
                 <jsp:forward page="../cotacoes/listar" /> 
             </c:if>
             <tags:mensagens/>

@@ -6,6 +6,7 @@ import br.edu.infnet.infra.fornecedores.ContatoRepository;
 import br.edu.infnet.infra.fornecedores.FornecedorRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ContatoController {
+    
+    ResourceBundle labels = ResourceBundle.getBundle("br.edu.infnet.bundle");
 
     @Autowired
     private ContatoRepository contatoRepository;
@@ -22,7 +25,7 @@ public class ContatoController {
 
     @RequestMapping("/contatos/listar")
     public ModelAndView listarContatos() {
-
+        
         ModelAndView retorno = new ModelAndView("contatos/index");
         List<Contato> contatos = contatoRepository.listar();
         if (contatos != null && !contatos.isEmpty()) {
@@ -30,7 +33,7 @@ public class ContatoController {
             retorno.addObject("contatos", contatos);
         } else {
             
-            retorno.addObject("msgAlerta", "Não há registros para exibir");
+            retorno.addObject("msgAlerta", labels.getString("msg.alerta.semRegistros"));
         }
         //----------------------------------------------------------------------
         List<Fornecedor> fornecedores = fornecedorRepository.listar();
