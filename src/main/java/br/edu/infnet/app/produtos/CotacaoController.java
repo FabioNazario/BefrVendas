@@ -60,11 +60,12 @@ public class CotacaoController {
     }
     
     @RequestMapping("/cotacoes/editar")
-    public ModelAndView editarCotacao(int id) {
+    public ModelAndView editarCotacao(Integer id) {
 
         ModelAndView retorno = new ModelAndView("cotacoes/index");
         
         try {
+            
             Cotacao cotacao = cotacaoRepository.obter(id);
             retorno.addObject("cotacao", cotacao);
 
@@ -85,7 +86,9 @@ public class CotacaoController {
     
     @RequestMapping("/cotacoes/salvar")
     public ModelAndView salvarCotacao(Cotacao cotacao, Integer fornId, Integer prodId) {
-
+        
+        System.out.println(cotacao.getValor());
+        
         ModelAndView retorno = new ModelAndView("cotacoes/index"); 
         cotacao.setData(new Date());
 
@@ -116,7 +119,8 @@ public class CotacaoController {
                 retorno.addObject("msgSucesso", labels.getString("msg.sucesso.atualizacaoRegistro"));
             } 
         } catch (PersistenceException e) {
-            retorno.addObject("msgErro", labels.getString("msg.erro.campoNulo"));
+            retorno.addObject("msgErro", labels.getString("msg.erro.campoNuloOuDublicado"));
+            e.printStackTrace();
         }
             
         
@@ -127,10 +131,11 @@ public class CotacaoController {
     }
     
     @RequestMapping("/cotacoes/excluir")
-    public ModelAndView excluirCotacao(int id) {
+    public ModelAndView excluirCotacao(Integer id) {
         
         ModelAndView retorno = new ModelAndView("cotacoes/index"); 
         try{
+            
             Cotacao cotacao = cotacaoRepository.obter(id);
             cotacaoRepository.excluir(cotacao);
             retorno.addObject("msgSucesso", labels.getString("msg.sucesso.registroExcluido"));

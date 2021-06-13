@@ -4,6 +4,8 @@ import br.edu.infnet.domain.produtos.Produto;
 import br.edu.infnet.infra.produtos.ProdutoRepository;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +35,19 @@ public class ProdutoController {
     }
 
     @RequestMapping("/produtos/editar")
-    public ModelAndView editarProduto(int id) {
+    public ModelAndView editarProduto(Integer id) {
 
         ModelAndView retorno = new ModelAndView("produtos/index");
-        Produto entity = produtoRepository.obter(id);
-        retorno.addObject("produto", entity);
+        try{
+            
+            Produto entity = produtoRepository.obter(id);
+            retorno.addObject("produto", entity);
+        } catch (Exception e) {
+            
+            retorno.addObject("msgErro", labels.getString("msg.erro.inesperado"));
+            e.printStackTrace();
+        }
+        
         return retorno;
     }
 
@@ -45,26 +55,48 @@ public class ProdutoController {
     public ModelAndView salvarProduto(Produto produto) {
 
         ModelAndView retorno = new ModelAndView("produtos/index");
-        if (produto.getId() == null) {
-            produtoRepository.inserir(produto);
-        } else {
-            produtoRepository.atualizar(produto);
-        }
-        retorno.addObject("produto", null);
-        retorno.addObject("produtos", produtoRepository.listar());
         
-        retorno.addObject("msgSucesso", "Fornecedor incluído com sucesso.");
+        listarProdutos();
+        try {
+            if (produto.getId() == null) {
+                produtoRepository.inserir(produto);
+                retorno.addObject("msgSucesso", labels.getString("msg.sucesso.inclusaoRegistro"));
+            } else {
+                produtoRepository.atualizar(produto);
+                retorno.addObject("msgSucesso", labels.getString("msg.sucesso.atualizacaoRegistro"));
+            }
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+            retorno.addObject("msgErro", labels.getString("msg.erro.campoNuloOuDublicado"));
+        }
+        
+        retorno.addObject("produto", null);
+       
         
         return retorno;
     }
     
     
     @RequestMapping("/produtos/excluir")
-    public ModelAndView excluirProduto(int id) {
+    public ModelAndView excluirProduto(Integer id) {
         
-        Produto produto = produtoRepository.obter(id);
-        produtoRepository.excluir(produto);
+        ModelAndView retorno = new ModelAndView("produtos/index"); 
+        
+        try{
+            
+            Produto produto = produtoRepository.obter(id);
+            produtoRepository.excluir(produto);
+            retorno.addObject("msgSucesso", labels.getString("msg.sucesso.registroExcluido"));   
+        }catch (NoResultException e){
+            
+            retorno.addObject("msgErro", labels.getString("msg.erro.exlcuidoNaoEncontrado"));
+            e.printStackTrace();
+        } catch (Exception e) {
+            
+            retorno.addObject("msgErro", labels.getString("msg.erro.inesperado"));
+            e.printStackTrace();
+        }
  
-        return new ModelAndView("produtos/index"); 
+        return retorno; 
     }
 }

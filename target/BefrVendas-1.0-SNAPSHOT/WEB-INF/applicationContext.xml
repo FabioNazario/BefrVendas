@@ -14,9 +14,9 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/cadastro" />
+        <property name="url" value="jdbc:mysql://database-1.ctxz6vsyrxbv.sa-east-1.rds.amazonaws.com:3306/cadastro" />
         <property name="username" value="root" />
-        <property name="password" value="root" />
+        <property name="password" value="mOigRlPyyDSpLsi5lXmA" />
         
     </bean>    
     <!-- =================================================================== -->

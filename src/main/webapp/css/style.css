@@ -1,0 +1,9 @@
+td {
+    vertical-align: middle!important;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #000;
+    background-color: #ffde59;
+    font-weight: bold;
+}

@@ -1,6 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib tagdir="/WEB-INF/tags/" prefix="tags" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -10,17 +10,17 @@
     <body>
         <tags:navibar pagina="fornecedores"/>
         <div class="container">
-            <c:if test="${empty fornecedores && empty msgAlerta && empty msgErro && empty msgSucesso}">
+            <c:if test="${empty fornecedores && empty msgAlerta}">
                 <jsp:forward page="listar" />
             </c:if>
             <tags:mensagens/>
             <form class="form-horizontal" action="salvar" method="post">
                 <input type="hidden" name="id" value="${fornecedor.id}" />
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="razaoSocial">Raz√£o Social:</label>
+                    <label class="control-label col-sm-2" for="razaoSocial">Raz„o Social:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="razaoSocial" 
-                               placeholder="Digite a Raz√£o Social" value="${fornecedor.razaoSocial}">
+                               placeholder="Digite a Raz„o Social" value="${fornecedor.razaoSocial}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="cnpj">CNPJ:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="cnpj" 
+                        <input type="text" class="form-control cnpj" name="cnpj" 
                                placeholder="Digite o CNPJ" value="${fornecedor.cnpj}">
                     </div>
                 </div>
@@ -45,22 +45,22 @@
             </form>
             <c:choose>
                 <c:when test="${not empty fornecedores}">
-                    <div style="width: 600px">
+                    <div style="width: 100%">
                         <table class="table" id="data-table">
                             <thead>
                                 <tr>
-                                    <th>ID</th><th>Raz√£o Social</th><th>Nome Fantasia</th><th>CNPJ</th><th>&nbsp;</th><th>&nbsp;</th>
+                                    <th>ID</th><th>Raz„o Social</th><th>Nome Fantasia</th><th>CNPJ</th><th>&nbsp;</th><th>&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="forn" items="${fornecedores}">
                                     <tr>
-                                        <td>${forn.id}</td>
-                                        <td>${forn.razaoSocial}</td>
-                                        <td>${forn.nomeFantasia}</td>
-                                        <td>${forn.cnpj}</td>
-                                        <td><a href="editar?id=${forn.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                        <td><a href="excluir?id=${forn.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                        <td class="align-middle">${forn.id}</td>
+                                        <td class="align-middle">${forn.razaoSocial}</td>
+                                        <td class="align-middle">${forn.nomeFantasia}</td>
+                                        <td class="align-middle">${forn.cnpj}</td>
+                                        <td class="align-middle"><a href="editar?id=${forn.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                        <td class="align-middle"><a href="excluir?id=${forn.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -70,4 +70,11 @@
             </c:choose>
         </div>
     </body>
+    <script>      
+        $(document).ready(function()
+            {
+                 $(".cnpj").mask("99.999.999/9999-99");
+            });
+    </script>
+    
 </html>

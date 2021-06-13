@@ -1,6 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib tagdir="/WEB-INF/tags/" prefix="tags" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -12,7 +12,7 @@
         <tags:navibar pagina="produtos"/>
 
         <div class="container">
-            <c:if test="${empty produtos && empty msgAlerta && empty msgErro && empty msgSucesso}">
+            <c:if test="${empty produtos && empty msgAlerta}">
                 <jsp:forward page="../produtos/listar" /> 
             </c:if>
             <tags:mensagens/>
@@ -26,10 +26,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="descricao">DescriÃ§Ã£o:</label>
+                    <label class="control-label col-sm-2" for="descricao">Descrição:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="descricao" 
-                               placeholder="Digite a DescriÃ§Ã£o" value="${produto.descricao}">
+                        <textarea type="text" class="form-control" name="descricao" rows="5"
+                               placeholder="Digite a Descrição" value="${produto.descricao}"/></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,13 +46,13 @@
                 </div>
             </form>
             <c:if test="${not empty produtos}">
-                <div style="width: 600px">
+                <div style="width: 100%">
                     <table class="table" id="data-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Descricao</th>
+                                <th>Descrição</th>
                                 <th>Marca</th>
                                 <th></th>
                                 <th></th>
@@ -61,12 +61,12 @@
                         <tbody>
                             <c:forEach var="prod" items="${produtos}">
                                 <tr>
-                                    <td>${prod.id}</td>
-                                    <td>${prod.nome}</td>
-                                    <td>${prod.descricao}</td>
-                                    <td>${prod.marca}</td>
-                                    <td><a href="editar?id=${prod.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                    <td><a href="excluir?id=${prod.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                    <td class="align-middle">${prod.id}</td>
+                                    <td class="align-middle">${prod.nome}</td>
+                                    <td class="align-middle">${prod.descricao}</td>
+                                    <td class="align-middle">${prod.marca}</td>
+                                    <td class="align-middle"><a href="editar?id=${prod.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                    <td class="align-middle"><a href="excluir?id=${prod.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

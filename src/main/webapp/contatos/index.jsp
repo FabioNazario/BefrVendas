@@ -1,6 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib tagdir="/WEB-INF/tags/" prefix="tags" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -9,23 +9,9 @@
         <tags:head/>
     </head>
     <body>
-    <nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="../index.jsp">BEFR Vendas</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="../fornecedores/index.jsp">Fornecedores</a></li>
-                    <li class="active"><a href="index.jsp">Contatos</a></li>
-                    <li><a href="../produtos/index.jsp">Produtos</a></li>
-                    <li><a href="../cotacoes/index.jsp">Cotações</a></li>
-                </ul>
-            </div>            
-        </div>
-    </nav>
+        <tags:navibar pagina="contatos"/>
     <div class="container">
-        <c:if test="${empty contatos && empty msgAlerta && empty msgErro && empty msgSucesso}">
+        <c:if test="${empty contatos && empty msgAlerta}">
             <jsp:forward page="listar" />
         </c:if>
         <tags:mensagens/>
@@ -33,8 +19,9 @@
             <input type="hidden" name="id" value="${contato.id}" />
             <div class="form-group">
                 <label class="control-label col-sm-2" for="nome">Fornecedor:</label>
+                
                 <div class="col-sm-10">
-                    <select name="fornId">
+                    <select class="form-control form-control-lg"  name="fornId">
                         <option value="0">Selecione...</option>
                         <c:forEach var="forn" items="${fornecedores}">
                             <option ${forn.id == fornecedor.id ?"selected":""} value="${forn.id}">${forn.nomeFantasia}</option>
@@ -59,7 +46,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="fone">Telefone:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="fone" 
+                    <input type="text" class="form-control telefone" name="fone" 
                            placeholder="Digite o Telefone" value="${contato.fone}">
                 </div>
             </div>
@@ -71,7 +58,7 @@
         </form>
         <c:choose>
             <c:when test="${not empty contatos}">
-                <div style="width: 600px">
+                <div style="width: 100%">
                     <table class="table" id="data-table">
                         <thead>
                             <tr>
@@ -87,13 +74,13 @@
                         <tbody>
                             <c:forEach var="contato" items="${contatos}">
                                 <tr>
-                                    <td>${contato.id}</td>
-                                    <td>${contato.nome}</td>
-                                    <td>${contato.email}</td>
-                                    <td>${contato.fone}</td>
-                                    <td>${contato.fornecedor.nomeFantasia}</td>
-                                    <td><a href="editar?id=${contato.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                    <td><a href="excluir?id=${contato.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                    <td class="align-middle">${contato.id}</td>
+                                    <td class="align-middle">${contato.nome}</td>
+                                    <td class="align-middle">${contato.email}</td>
+                                    <td class="align-middle">${contato.fone}</td>
+                                    <td class="align-middle">${contato.fornecedor.nomeFantasia}</td>
+                                    <td class="align-middle"><a href="editar?id=${contato.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                    <td class="align-middle"><a href="excluir?id=${contato.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -103,4 +90,12 @@
         </c:choose>
     </div>
 </body>
+<script>
+ 
+        
+        $(document).ready(function()
+            {
+                 $(".telefone").mask("(00) 00000-0009");
+            });
+    </script>
 </html>

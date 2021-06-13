@@ -1,5 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@tag description="mensagens" pageEncoding="UTF-8"%>
+<%@tag description="mensagens" pageEncoding="ISO-8859-1"%>
 
 <%@attribute name="pagina"%>
 

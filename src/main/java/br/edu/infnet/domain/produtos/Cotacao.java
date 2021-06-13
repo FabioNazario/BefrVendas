@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(catalog = "cadastro", schema = "")
+@Table(name="cotacao", catalog = "cadastro", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Cotacao.findAll", query = "SELECT c FROM Cotacao c"),
     @NamedQuery(name = "Cotacao.findById", query = "SELECT c FROM Cotacao c WHERE c.id = :id")

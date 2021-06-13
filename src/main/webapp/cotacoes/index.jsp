@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib tagdir="/WEB-INF/tags/" prefix="tags" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,12 +15,12 @@
                 <jsp:forward page="../cotacoes/listar" /> 
             </c:if>
             <tags:mensagens/>
-            <form class="form-horizontal" action="salvar" method="post">
+            <form class="form-horizontal" action="salvar" method="post" onsubmit="ajustaValorMoeda()">
                 <input type="hidden" name="id" value="${cotacao.id}" />
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="nome">Fornecedor:</label>
                     <div class="col-sm-10">
-                        <select name="fornId">
+                        <select class="form-control form-control-lg"  name="fornId">
                             <option value="0">Selecione...</option>
                             <c:forEach var="forn" items="${fornecedores}">
                                 <option ${forn.id == fornecedor.id ?"selected":""} value="${forn.id}">${forn.nomeFantasia}</option>
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="nome">Produto:</label>
                     <div class="col-sm-10">
-                        <select name="prodId">
+                        <select class="form-control form-control-lg"  name="prodId">
                             <option value="0">Selecione...</option>
                             <c:forEach var="prod" items="${produtos}">
                                 <option ${prod.id == produto.id ?"selected":""} value="${prod.id}">${prod.nome}</option>
@@ -40,9 +40,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="valor">Valor:</label>
+                    <label class="control-label col-sm-2" for="valor">Valor(R$):</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="valor" 
+                        <input type="text" class="form-control moeda" name="valor" id="valor"  
                                placeholder="Digite o Valor" value="${cotacao.valor}">
                     </div>
                 </div>
@@ -54,7 +54,7 @@
             </form>
             <c:choose>
                 <c:when test="${not empty cotacoes}">
-                    <div style="width: 600px">
+                    <div style="width: 100%">
                         <table class="table" id="data-table">
                             <thead>
                                 <tr>
@@ -70,18 +70,18 @@
                             <tbody>
                                 <c:forEach var="cota" items="${cotacoes}">
                                     <tr>
-                                        <td>${cota.id}</td>
-                                        <td><fmt:formatDate value= "${cota.data}" 
+                                        <td class="align-middle">${cota.id}</td>
+                                        <td class="align-middle"><fmt:formatDate value= "${cota.data}" 
                                                         pattern="dd/MM/yy HH:mm:ss"/>
                                         </td>
-                                        <td>${cota.fornecedor.nomeFantasia}</td>
-                                        <td>${cota.produto.nome}</td>
+                                        <td class="align-middle">${cota.fornecedor.nomeFantasia}</td>
+                                        <td class="align-middle">${cota.produto.nome}</td>
                                         <fmt:setLocale value="pt_BR" scope="session"/>
-                                        <td><fmt:formatNumber value= "${cota.valor}" 
+                                        <td class="align-middle"><fmt:formatNumber value= "${cota.valor}" 
                                                           type="currency"/>
                                         </td>
-                                        <td><a href="editar?id=${cota.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                        <td><a href="excluir?id=${cota.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                        <td class="align-middle"><a href="editar?id=${cota.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                        <td class="align-middle"><a href="excluir?id=${cota.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -89,6 +89,18 @@
                     </div>
                 </c:when>
             </c:choose>
-        </div>
+        </div>       
     </body>
+    <script>
+        function ajustaValorMoeda() {
+            value = document.getElementById("valor").value;
+            value = value.replaceAll(".","").replaceAll(",",".")
+            document.getElementById("valor").value = value;
+        }
+        
+        $(document).ready(function()
+            {
+                 $('.moeda').mask('#.##0,00', {reverse: true});
+            });
+    </script>
 </html>
