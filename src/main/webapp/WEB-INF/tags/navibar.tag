@@ -15,7 +15,7 @@
                 <img style="width: 115px; margin-top: -12px;" src="${path}/imagens/logo_completo_br.png" alt=""/>
             </a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar"">
             <ul class="nav navbar-nav">
                 <li ${pagina == "fornecedores"?"class=active":""}>
                     <a href="${path}/fornecedores/index.jsp">Fornecedores</a></li>
