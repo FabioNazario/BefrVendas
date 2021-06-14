@@ -60,6 +60,7 @@ CREATE TABLE `fornecedor_produto` (
 ALTER TABLE `cadastro`.`cotacao` 
 DROP FOREIGN KEY `fk_cotacao_fornecedor`,
 DROP FOREIGN KEY `fk_cotacao_produto`;
+
 ALTER TABLE `cadastro`.`cotacao` 
 ADD CONSTRAINT `fk_cotacao_fornecedor`
   FOREIGN KEY (`id_fornecedor`)
@@ -72,9 +73,19 @@ ADD CONSTRAINT `fk_cotacao_produto`
   
 ALTER TABLE `cadastro`.`contato` 
 DROP FOREIGN KEY `fk_contanto_fornecedor`;
+
 ALTER TABLE `cadastro`.`contato` 
 ADD CONSTRAINT `fk_contanto_fornecedor`
   FOREIGN KEY (`id_fornecedor`)
   REFERENCES `cadastro`.`fornecedor` (`id`)
   ON DELETE CASCADE;
+
+
+INSERT INTO `produto` VALUES (1,'Livro - Coleção Harry Potter - 7 volumes','Maior fenômeno editorial de todos os tempos, com mais de 450 milhões de exemplares vendidos em 70 idiomas, a série Harry Potter chega às prateleiras em mais essa edição de colecionador. Os sete livros da saga criada por J. K. Rowling - que acompanha a jornada do adorado aprendiz de bruxo contra o maléfico Voldemort, - ganham novas capas e novas ilustrações e vêm num box exclusivo. Uma novidade capaz de conquistar os mais exigentes fãs, ávidos por novidades ligadas ao universo da saga, e também os novos leitores.','Rocco'),(2,'Smartphone Samsung Galaxy A01','Core 32GB 4G Wi-Fi Tela 5.3\'\' Dual Chip 2GB RAM Câmera 8MP + Selfie 5MP - Preto','Samsung'),(3,'Tênis Asics Gel Equation 10 Masculino','Saia para correr com o Tênis Masculino Asics Gel-Equation 10! Confeccionado com material têxtil e sintético que garante circulação de ar conforto para os seus pés durante o treino, o tênis de corrida conta com amortecimento em Gel, que proporciona ótima absorção dos impactos, e o solado conta com a borracha AHAR, para maior durabilidade do calçado.','Asics');
+
+INSERT INTO `fornecedor` VALUES (1,'MAGAZINE LUIZA S/A','Magazine Luiza','47.960.950/0256-20'),(2,'NS2.COM INTERNET S.A.','NetShoes','09.339.936/0001-16'),(3,'LOJAS AMERICANAS S.A.','Lojas Americanas','33.014.556/0001-96');
+
+INSERT INTO `contato` VALUES (1,'Bruno Muniz','bruno.muniz@magalu.com.br','(21) 74154-7414',1),(2,'Eliton Heythansen','eliton.heythansen@magalu.com.br','(21) 99254-1477',1),(3,'Fabio Nazario','fabio.nazario@netshoes.com.br','(21) 99365-414',2),(4,'Rogéria Leandro','rogeria.leandro@lojasamericanas.com.br','(21) 99987-7744',3);
+
+INSERT INTO `cotacao` VALUES (1,1,1,'2021-06-13 06:36:23',199.00),(2,3,1,'2021-06-13 06:39:50',219.00),(3,3,2,'2021-06-13 06:40:09',520.38),(4,2,3,'2021-06-14 02:59:26',249.99);
 
