@@ -19,14 +19,12 @@
             <hr>
             <img width="100%" src="imagens/logo_completo_pt.png" alt=""/>
             <div style="text-align:center">
-                    <h2>Integrantes:</h2>
-                    <span> Bruno Muniz </span> <br>
-                    <span> Eliton Heythansen </span><br>
-                    <span> Fábio Nazário </span> <br>
-                    <span> Rogéria Leandro </span> <br>
-                </div>
+                <h2>Integrantes:</h2>
+                <span> Bruno Muniz </span> <br>
+                <span> Eliton Heythansen </span><br>
+                <span> Fábio Nazário </span> <br>
+                <span> Rogéria Leandro </span> <br>
             </div>
-            
         </div>
     </body>
     
