@@ -70,18 +70,18 @@
                             <tbody>
                                 <c:forEach var="cota" items="${cotacoes}">
                                     <tr>
-                                        <td class="align-middle">${cota.id}</td>
-                                        <td class="align-middle"><fmt:formatDate value= "${cota.data}" 
-                                                        pattern="dd/MM/yy HH:mm:ss"/>
+                                        <td >${cota.id}</td>
+                                        <td ><fmt:formatDate value= "${cota.data}" 
+                                                        pattern="dd/MM/yyyy HH:mm:ss"/>
                                         </td>
-                                        <td class="align-middle">${cota.fornecedor.nomeFantasia}</td>
-                                        <td class="align-middle">${cota.produto.nome}</td>
+                                        <td >${cota.fornecedor.nomeFantasia}</td>
+                                        <td >${cota.produto.nome}</td>
                                         <fmt:setLocale value="pt_BR" scope="session"/>
-                                        <td class="align-middle"><fmt:formatNumber value= "${cota.valor}" 
+                                        <td ><fmt:formatNumber value= "${cota.valor}" 
                                                           type="currency"/>
                                         </td>
-                                        <td class="align-middle"><a href="editar?id=${cota.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                        <td class="align-middle"><a href="excluir?id=${cota.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                        <td ><a href="editar?id=${cota.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                        <td ><a href="excluir?id=${cota.id}" onclick="return confirm('Tem certeza que deseja excluir a cotação ${cota.id}?' )"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

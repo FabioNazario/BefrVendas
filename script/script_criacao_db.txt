@@ -56,3 +56,25 @@ CREATE TABLE `fornecedor_produto` (
   CONSTRAINT `fk_forncecedor_produto_prod` FOREIGN KEY (`id_produto`) REFERENCES `produto` (`id`),
   CONSTRAINT `fk_fornecedor_produto_forn` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ALTER TABLE `cadastro`.`cotacao` 
+DROP FOREIGN KEY `fk_cotacao_fornecedor`,
+DROP FOREIGN KEY `fk_cotacao_produto`;
+ALTER TABLE `cadastro`.`cotacao` 
+ADD CONSTRAINT `fk_cotacao_fornecedor`
+  FOREIGN KEY (`id_fornecedor`)
+  REFERENCES `cadastro`.`fornecedor` (`id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `fk_cotacao_produto`
+  FOREIGN KEY (`id_produto`)
+  REFERENCES `cadastro`.`produto` (`id`)
+  ON DELETE CASCADE;
+  
+ALTER TABLE `cadastro`.`contato` 
+DROP FOREIGN KEY `fk_contanto_fornecedor`;
+ALTER TABLE `cadastro`.`contato` 
+ADD CONSTRAINT `fk_contanto_fornecedor`
+  FOREIGN KEY (`id_fornecedor`)
+  REFERENCES `cadastro`.`fornecedor` (`id`)
+  ON DELETE CASCADE;
+

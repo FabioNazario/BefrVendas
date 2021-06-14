@@ -61,12 +61,12 @@
                         <tbody>
                             <c:forEach var="prod" items="${produtos}">
                                 <tr>
-                                    <td class="align-middle">${prod.id}</td>
-                                    <td class="align-middle">${prod.nome}</td>
-                                    <td class="align-middle">${prod.descricao}</td>
-                                    <td class="align-middle">${prod.marca}</td>
-                                    <td class="align-middle"><a href="editar?id=${prod.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                    <td class="align-middle"><a href="excluir?id=${prod.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                    <td >${prod.id}</td>
+                                    <td >${prod.nome}</td>
+                                    <td >${prod.descricao}</td>
+                                    <td >${prod.marca}</td>
+                                    <td ><a href="editar?id=${prod.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                    <td ><a href="excluir?id=${prod.id}" onclick="return confirm('ATENÇAO:\nAs cotações ligadas a este produto serão excluidas.\n\nTem certeza que deseja excluir o produto ${prod.nome}?' )"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

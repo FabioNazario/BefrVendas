@@ -74,13 +74,13 @@
                         <tbody>
                             <c:forEach var="contato" items="${contatos}">
                                 <tr>
-                                    <td class="align-middle">${contato.id}</td>
-                                    <td class="align-middle">${contato.nome}</td>
-                                    <td class="align-middle">${contato.email}</td>
-                                    <td class="align-middle">${contato.fone}</td>
-                                    <td class="align-middle">${contato.fornecedor.nomeFantasia}</td>
-                                    <td class="align-middle"><a href="editar?id=${contato.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                    <td class="align-middle"><a href="excluir?id=${contato.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                    <td >${contato.id}</td>
+                                    <td >${contato.nome}</td>
+                                    <td >${contato.email}</td>
+                                    <td >${contato.fone}</td>
+                                    <td >${contato.fornecedor.nomeFantasia}</td>
+                                    <td ><a href="editar?id=${contato.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                    <td ><a href="excluir?id=${contato.id}" onclick="return confirm('Tem certeza que deseja excluir o contato ${contato.nome}?' )"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

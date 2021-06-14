@@ -55,12 +55,12 @@
                             <tbody>
                                 <c:forEach var="forn" items="${fornecedores}">
                                     <tr>
-                                        <td class="align-middle">${forn.id}</td>
-                                        <td class="align-middle">${forn.razaoSocial}</td>
-                                        <td class="align-middle">${forn.nomeFantasia}</td>
-                                        <td class="align-middle">${forn.cnpj}</td>
-                                        <td class="align-middle"><a href="editar?id=${forn.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
-                                        <td class="align-middle"><a href="excluir?id=${forn.id}"><img src="../imagens/delete_black_24dp.svg" /></a></td>
+                                        <td >${forn.id}</td>
+                                        <td >${forn.razaoSocial}</td>
+                                        <td >${forn.nomeFantasia}</td>
+                                        <td >${forn.cnpj}</td>
+                                        <td ><a href="editar?id=${forn.id}"><img src="../imagens/edit_black_24dp.svg" /></a></td>
+                                        <td ><a href="excluir?id=${forn.id}" onclick="return confirm('ATENÇAO:\nAs cotações e contatos ligados a este fornecedor serão excluidos.\n\nTem certeza que deseja excluir o fornecedor ${forn.nomeFantasia}?' )"><img src="../imagens/delete_black_24dp.svg" /></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
